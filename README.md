@@ -63,6 +63,16 @@ Avoid last `\n` character in heredoc by using `chomp` along with heredoc like th
 `system 'clear'` (maybe only for linux systems) or 
 `puts "\e[H\e[2J"`
 
+### Monkey Patching
+
+Changing a method at runtime instead of updating the object definition is one example;similarly, adding attributes (whether methods or variables) at runtime is considered monkey patching. These are often done when working with modules you don't have the source for, such that the object definitions can't be easily changed.
+
+This is considered bad because it means that an object's definition does not completely or accurately describe how it actually behaves.
+
+### Rubocop ABC (Assignment Branch Condition)
+
+To reduce the ABC value, reduce assignments (use less intermediate variables), fewer branches (calling other methods), and conditionals (if/else statements) - [source](http://redgreenrepeat.com/2017/01/20/understanding-assignment-branch-condition/)
+
 ## Eventual Improvements List
 
 - [ ] finish Knuth algorithm with minmax sorting from step 6
@@ -73,14 +83,13 @@ Avoid last `\n` character in heredoc by using `chomp` along with heredoc like th
 
 - [ ] create Tournament of X number of alternating rounds
 
-## Q's
+- [ ] change `@code_pegs` to CONSTANT (@rlmoser)
 
-- [ ] `@code_pegs` or colours should be a constant or generated on `Board` class creation? How to understand when to use what?
+- [ ] split all the `case` statements in `game.rb` into its own methods (@rlmoser)
 
-- [ ] to control the game flow is it preferable to use `case`- `when`  or `if` `else` statements?
+- [ ] create a separate `module Colorable` to keep colourful formatting in order to avoid monkey patching (@rlmoser & @timato)
 
-- [ ] still don't understand very well `private` and `public` methods
-
+- [ ] refactor the code to reduce ABC value
 
 
 
