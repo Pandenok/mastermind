@@ -1,5 +1,10 @@
+require './colorable'
+require './display'
+
 class Human
   include Display
+  include Colorable
+
   attr_reader :guess
 
   def initialize; end
@@ -81,6 +86,7 @@ class Scatterbrain
 end
 
 class Methodical
+  include Colorable
   attr_reader :guess
 
   def initialize(board)
@@ -99,7 +105,7 @@ class Methodical
     elsif idea_ready?
       work_with_idea(board)
       put_on(board)
-    elsif check_for_blue(board)
+    elsif check_for_bluee(board)
       @guess = [board.code_pegs['b'], board.code_pegs['b'], board.code_pegs['g'], board.code_pegs['g']]
       analyse_feedback(board)
       put_on(board)
@@ -127,14 +133,14 @@ class Methodical
   end
 
   def analyse_feedback(board)
-    @white_pegs = board.small_holes_set.last.count("\e[37m\u25CF\e[0m")
-    @red_pegs = board.small_holes_set.last.count("\e[31m\u25CF\e[0m")
+    @white_pegs = board.small_holes_set.last.count(gray("\u25CF"))
+    @red_pegs = board.small_holes_set.last.count(red("\u25CF"))
 
-    if (@red_pegs == 1 && @white_pegs.zero? && @idea.include?("\e[44m b \e[0m"))
+    if (@red_pegs == 1 && @white_pegs.zero? && @idea.include?(blue(" b ")))
       @idea.delete_at(@idea.index("\e[44m b \e[0m"))
       @idea.unshift("\e[44m b \e[0m")
-    elsif (@white_pegs == 1 && @red_pegs.zero? && @idea.include?("\e[44m b \e[0m"))
-    elsif @white_pegs == 2 && @idea.include?("\e[44m b \e[0m")
+    elsif (@white_pegs == 1 && @red_pegs.zero? && @idea.include?(blue(" b ")))
+    elsif @white_pegs == 2 && @idea.include?(blue(" b "))
       @idea.unshift(@last_guess.last)
     elsif @white_pegs.nonzero?
       @idea.unshift(@last_guess.last)
@@ -148,9 +154,9 @@ class Methodical
   end
 
   def work_with_idea(board)
-    if board.small_holes_set.last.count("\e[37m\u25CF\e[0m") == 4
+    if board.small_holes_set.last.count(gray("\u25CF")) == 4
       @guess[0], @guess[1] = @guess[1], @guess[0]
-    elsif (board.small_holes_set.last.count("\e[37m\u25CF\e[0m") == 2) && !(@idea.include?(nil))
+    elsif (board.small_holes_set.last.count(red("\u25CF")) == 2) && !(@idea.include?(nil))
       @guess[2], @guess[3] = @guess[3], @guess[2]
     else
       @idea = @idea.compact
@@ -162,7 +168,7 @@ class Methodical
     board.small_holes_set.last.eql?(nil)
   end
 
-  def check_for_blue(board)
+  def check_for_bluee(board)
     @last_guess.eql?([board.code_pegs['b'], board.code_pegs['b'], board.code_pegs['b'], board.code_pegs['b']])
   end
 
@@ -193,6 +199,7 @@ class Methodical
 end
 
 class Knuth
+  include Colorable
   attr_reader :guess
 
   def initialize(board)
@@ -230,9 +237,9 @@ class Knuth
       index += 1
     end
     color_match = matches - exact_match
-    exact_match = exact_match.map { |item| item = "\u25CF".red }
-    color_match = color_match.map { |item| item = "\u25CF".gray }
-    placeholder = ["\u25CB".gray, "\u25CB".gray, "\u25CB".gray, "\u25CB".gray]
+    exact_match = exact_match.map { |item| item = red("\u25CF") }
+    color_match = color_match.map { |item| item = gray("\u25CF") }
+    placeholder = [gray("\u25CB"), gray("\u25CB"), gray("\u25CB"), gray("\u25CB")]
     @feedback = []
     @feedback = @feedback.push(exact_match, color_match, placeholder).flatten.take(4)
   end

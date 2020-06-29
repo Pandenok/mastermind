@@ -1,7 +1,10 @@
 require './display'
+require './colorable'
 
 class Game
+  include Colorable
   include Display
+
   MAX_ATTEMPTS = 12
   attr_accessor :player, :board
   attr_reader :computer_score, :human_score
@@ -123,9 +126,9 @@ class Game
 
   def feedback
     @feedback = []
-    @exact_match = exact_match.map { |item| item = "\u25CF".red }
-    @color_match = color_match.map { |item| item = "\u25CF".gray }
-    @placeholder = ["\u25CB".gray, "\u25CB".gray, "\u25CB".gray, "\u25CB".gray]
+    @exact_match = exact_match.map { |item| item = red("\u25CF") }
+    @color_match = color_match.map { |item| item = gray("\u25CF") }
+    @placeholder = [gray("\u25CB"), gray("\u25CB"), gray("\u25CB"), gray("\u25CB")]
     @feedback = @feedback.push(@exact_match, @color_match, @placeholder).flatten.take(4)
     @board.small_holes_set << @feedback
   end

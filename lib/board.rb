@@ -1,4 +1,5 @@
 class Board
+  include Colorable
   include Display
 
   attr_accessor :playboard, :code_pegs, :small_holes_set
@@ -8,20 +9,20 @@ class Board
 
   def initialize
     @playboard = []
-    @code_pegs = { 'r' => ' r '.bg_red,
-                   'b' => ' b '.bg_blue,
-                   'g' => ' g '.bg_green,
-                   'c' => ' c '.bg_cyan,
-                   'm' => ' m '.bg_magenta,
-                   'o' => ' o '.bg_orange }
+    @code_pegs = { 'r' => bg_red(' r '),
+                   'b' => bg_blue(' b '),
+                   'g' => bg_green(' g '),
+                   'c' => bg_cyan(' c '),
+                   'm' => bg_magenta(' m '),
+                   'o' => bg_orange(' o ') }
     @small_holes_set = []
   end
 
   def show(player)
     if player.class.eql?(Human)
-      puts "\n  #{@playboard.size}. ".bold.ljust(18) + 'You tried: '.ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and get'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
+      puts bold("\n  #{@playboard.size}. ").ljust(18) + 'You tried: '.ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and get'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
     else
-      puts "\n  #{@playboard.size}. ".bold.ljust(18) + "#{player.to_s} tries: ".ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and gets'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
+      puts bold("\n  #{@playboard.size}. ").ljust(18) + "#{player.to_s} tries: ".ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and gets'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
     end
   end
 

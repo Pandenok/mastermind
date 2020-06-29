@@ -1,45 +1,22 @@
-class String
-  def black;      "\e[30m#{self}\e[0m" end
-  def red;        "\e[31m#{self}\e[0m" end
-  def green;      "\e[32m#{self}\e[0m" end
-  def orange;     "\e[33m#{self}\e[0m" end
-  def blue;       "\e[34m#{self}\e[0m" end
-  def magenta;    "\e[35m#{self}\e[0m" end
-  def cyan;       "\e[36m#{self}\e[0m" end
-  def gray;       "\e[37m#{self}\e[0m" end
-
-  def bg_black;   "\e[40m#{self}\e[0m" end
-  def bg_red;     "\e[41m#{self}\e[0m" end
-  def bg_green;   "\e[42m#{self}\e[0m" end
-  def bg_orange;  "\e[43m#{self}\e[0m" end
-  def bg_blue;    "\e[44m#{self}\e[0m" end
-  def bg_magenta; "\e[45m#{self}\e[0m" end
-  def bg_cyan;    "\e[46m#{self}\e[0m" end
-  def bg_gray;    "\e[47m#{self}\e[0m" end
-
-  def underline;  "\e[4;1m#{self}\e[0m" end
-  def bold;       "\e[1;1m#{self}\e[0m" end
-  def italic;     "\e[3m#{self}\e[23m" end
-end
-
 module Display
+  include Colorable
 
   def display_main_menu
     system 'clear'
     <<~HEREDOC.chomp
-      Welcome to the famous #{"MASTERMIND".underline} game!
+      Welcome to the famous #{underline("MASTERMIND")} game!
 
-        #{"1.".red} See Rules
+        #{red("1.")} See Rules
 
-        #{"2.".green} Play game as #{"Codemaker".bold}
+        #{green("2.")} Play game as #{bold("Codemaker")}
       
-        #{"3.".magenta} Play game as #{"Codebreaker".bold}
+        #{magenta("3.")} Play game as #{bold("Codebreaker")}
       
-        #{"4.".blue} Score Table
+        #{blue("4.")} Score Table
       
-        #{"5.".orange} Reset all the scores
+        #{orange("5.")} Reset all the scores
       
-        #{"6.".cyan} Quit
+        #{cyan("6.")} Quit
 
       Please, make your choice: 
     HEREDOC
@@ -55,20 +32,20 @@ module Display
   
       The game is limited to two players.
   
-      Player one (aka code-#{"maker".bold}) picks four coloured pegs and creates (i.e. #{'makes'.italic}) a secret master code.
-      Player two (aka code-#{"breaker".bold}) then has to work out (i.e. #{'break'.italic}) the sequence of pegs that player one has picked. 
+      Player one (aka code-#{bold("maker")}) picks four coloured pegs and creates (i.e. #{italic('makes')}) a secret master code.
+      Player two (aka code-#{bold("breaker")}) then has to work out (i.e. #{italic('break')}) the sequence of pegs that player one has picked. 
   
       There are six available peg colours:
   
-      #{" red ".bg_red} #{" blue ".bg_blue} #{" green ".bg_green} #{" cyan ".bg_cyan} #{" magenta ".bg_magenta} #{" orange ".bg_orange}
+      #{bg_red(" red ")} #{bg_blue(" blue ")} #{bg_green(" green ")} #{bg_cyan(" cyan ")} #{bg_magenta(" magenta ")} #{bg_orange(" orange ")}
   
-      Codemaker’s combination (#{'master code'.italic}) could be 
+      Codemaker’s combination (#{italic('master code')}) could be 
       
-        four of the same colour: #{" b ".bg_blue} #{" b ".bg_blue} #{" b ".bg_blue} #{" b ".bg_blue}
+        four of the same colour: #{bg_blue(" b ")} #{bg_blue(" b ")} #{bg_blue(" b ")} #{bg_blue(" b ")}
         
-                    two of each: #{" g ".bg_green} #{" g ".bg_green} #{" o ".bg_orange} #{" o ".bg_orange}
+                    two of each: #{bg_green(" g ")} #{bg_green(" g ")} #{bg_red(" r ")} #{bg_red(" r ")}
         
-         four different colours: #{" m ".bg_magenta} #{" o ".bg_orange} #{" c ".bg_cyan} #{" r ".bg_magenta}
+         four different colours: #{bg_magenta(" m ")} #{bg_orange(" o ")} #{bg_cyan(" c ")} #{bg_red(" r ")}
       
                               or any other combination.
   
@@ -76,9 +53,9 @@ module Display
   
       After each guess, there will be up to four hints to help crack the code.
   
-        #{"\u25CF".red} (red marker) - Codebreaker has picked the correct colour AND has it in the correct position 
-        #{"\u25CF".gray} (white marker) - Codebreaker has used a correct peg colour but placed it in the wrong position
-        #{"\u25CB".gray} (empty slot) - Codebreaker has done a wrong choice of colour
+        #{red("\u25CF")} (red marker) - Codebreaker has picked the correct colour AND has it in the correct position 
+        #{gray("\u25CF")} (white marker) - Codebreaker has used a correct peg colour but placed it in the wrong position
+        #{gray("\u25CB")} (empty slot) - Codebreaker has done a wrong choice of colour
   
       The markers are placed in no particular order so Codebreaker does not know which peg a marker refers to.
       Codebreaker then has to think logically to deduce the correct sequence by moving pegs around and checking the markers after each turn.
@@ -100,15 +77,15 @@ module Display
           
       How smart do you want your opponent?
 
-        1. #{"Stubborn".bold} - #{"one day, it'll win in 1 guess".italic} :)
+        1. #{bold("Stubborn")} - #{italic("one day, it'll win in 1 guess")} :)
 
-        2. #{"Scatterbrain".bold} - #{"it tries hard but with no much luck".italic} 
+        2. #{bold("Scatterbrain")} - #{italic("it tries hard but with no much luck")} 
         
-        3. #{"Methodical".bold} - #{"if you don't give it hard tasks, it will make it".italic}
+        3. #{bold("Methodical")} - #{italic("if you don't give it hard tasks, it will make it")}
         
-        4. #{"Knuth".bold} - #{"will beat your ass in 5 moves or less".italic}
+        4. #{bold("Knuth")} - #{italic("will beat your ass in 5 moves or less")}
 
-        5. #{"Cheater".bold} - #{"well... you'll see... real cheater".italic}
+        5. #{bold("Cheater")} - #{italic("well... you'll see... real cheater")}
         
       Please choose who do you wanna play with: 
     HEREDOC
@@ -118,11 +95,11 @@ module Display
     system 'clear'
     <<~HEREDOC
 
-      #{"C'mon!".bold} Seriously?! 
+      #{bold("C'mon!")} Seriously?! 
       
-      Are you #{"really".underline} here to read the history of Mastermind Game?!
+      Are you #{underline("really")} here to read the history of Mastermind Game?!
       
-      #{"It's time to play now!!!".underline.green}
+      #{underline(green("It's time to play now!!!"))}
 
       Press any key to go back to the main menu...
     HEREDOC
@@ -132,13 +109,13 @@ module Display
     <<~HEREDOC
     There are six available peg colours:
   
-    #{" red ".bg_red} #{" blue ".bg_blue} #{" green ".bg_green} #{" cyan ".bg_cyan} #{" magenta ".bg_magenta} #{" orange ".bg_orange}
+    #{bg_red(" red ")} #{bg_blue(" blue ")} #{bg_green(" green ")} #{bg_cyan(" cyan ")} #{bg_magenta(" magenta ")} #{bg_orange(" orange ")}
     
     A secret pattern should be composed of 4 code pegs.
     Digit the first letter of the colour to pick it up. 
-    E.g., the sequence #{"omcr".underline} will produce the following combination:
+    E.g., the sequence #{underline("omcr")} will produce the following combination:
 
-    #{" o ".bg_orange} #{" m ".bg_magenta} #{" c ".bg_cyan} #{" r ".bg_red}
+    #{bg_orange(" o ")} #{bg_magenta(" m ")} #{bg_cyan(" c ")} #{bg_red(" r ")}
 
     HEREDOC
   end
@@ -150,19 +127,19 @@ module Display
       sleep(0.2)
       print "."
     end
-    puts "#{"Done!".green} "
+    puts "#{green("Done!")} "
     sleep(0.5)
     <<~HEREDOC
 
       Computer has generated a sequence with four elements made up of:
 
-      #{" red ".bg_red} #{" blue ".bg_blue} #{" green ".bg_green} #{" cyan ".bg_cyan} #{" magenta ".bg_magenta} #{" orange ".bg_orange}
+      #{bg_red(" red ")} #{bg_blue(" blue ")} #{bg_green(" green ")} #{bg_cyan(" cyan ")} #{bg_magenta(" magenta ")} #{bg_orange(" orange ")}
 
       You have #{Game::MAX_ATTEMPTS} attempts to break it.
       
-      Digit the first letter of the colour to pick it up (i.g. #{"r".red}#{"g".green}#{"o".orange}#{"m".magenta})
+      Digit the first letter of the colour to pick it up (i.g. #{red("r")}#{green("g")}#{orange("o")}#{magenta("m")})
 
-      #{"It's play time!".bold}
+      #{bold("It's play time!")}
     HEREDOC
   end
 
@@ -191,8 +168,8 @@ module Display
       
       The winner is the one who has the most points after the agreed-upon number of games are played. 
 
-            #{"Your score is: ".orange}  #{"#{human_score}".bold}
-        #{"Computer score is: ".orange}  #{"#{computer_score}".bold}
+            #{orange("Your score is: ")}  #{bold("#{human_score}")}
+        #{orange("Computer score is: ")}  #{bold("#{computer_score}")}
 
       Press any key to go back to Main Menu...
     HEREDOC
@@ -203,17 +180,17 @@ module Display
     <<~HEREDOC
       All the scores were resetted
 
-            #{"Your score is: ".orange}  #{"#{human_score}".bold}
-        #{"Computer score is: ".orange}  #{"#{computer_score}".bold}
+            #{orange("Your score is: ")}  #{bold("#{human_score}")}
+        #{orange("Computer score is: ")}  #{bold("#{computer_score}")}
 
       Press any key to go back to Main Menu...
     HEREDOC
   end
 
   def display_human_won(message)
-    {'unbelievable' => "\nWOW! #{"Congratulations!".green}\nYou’re the world’s greatest! You are the master of this game!\nEven Knuth player couldn't do better!",
-    'good job' => "\n#{"Congratulations".green} on your fabulous victory!\nI always knew you are different from others.\nSo, keep up the good work. Congrats again!",
-    'last chance' => "\nThe harder the battle the sweeter the victory, eh? :)\n#{"Congratulations!".green} for your fabulous victory! You deserve it every bit!",
+    {'unbelievable' => "\nWOW! #{green("Congratulations!")}\nYou’re the world’s greatest! You are the master of this game!\nEven Knuth player couldn't do better!",
+    'good job' => "\n#{green("Congratulations")} on your fabulous victory!\nI always knew you are different from others.\nSo, keep up the good work. Congrats again!",
+    'last chance' => "\nThe harder the battle the sweeter the victory, eh? :)\n#{green("Congratulations!")} for your fabulous victory! You deserve it every bit!",
     } [message]
   end
 
@@ -238,9 +215,9 @@ module Display
     Rehearse it again.
     Run it again. 
     Try it again.
-    Because again is #{"practice".underline}, 
-      and practice is #{"improvement".underline}, 
-        and improvement only leads to #{"perfection".underline}.
+    Because again is #{underline("practice")}, 
+      and practice is #{underline("improvement")}, 
+        and improvement only leads to #{underline("perfection")}.
     HEREDOC
   end
 
@@ -249,11 +226,11 @@ module Display
   end
 
   def display_computer_lost
-    puts "\n#{"Congratulations!".green}\n#{player.to_s} ran out of all the available attemps.\nThat was a hard code to crack!\nYou earn extra point!"
+    puts "\n#{green("Congratulations!")}\n#{player.to_s} ran out of all the available attemps.\nThat was a hard code to crack!\nYou earn extra point!"
   end
 
   def display_error_invalid_input
-    puts "#{"ERROR".bg_red}: #{"invalid input".red}"
+    puts "#{bg_red("ERROR")}: #{red("invalid input")}"
   end
 
   def display_play_again
