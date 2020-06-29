@@ -20,33 +20,67 @@ class Game
     print display_main_menu
     continue = true
     input = gets.chomp.to_i
-    until input.between?(1,6)
+    until input.between?(1, 6)
       puts display_error_invalid_input
       input = gets.chomp.to_i
     end
+    main_menu_options(input)
+  end
+
+  def main_menu_options(input)
     case input
     when 1
-      puts display_rules
-      game_rules_submenu
+      menu_rules
     when 2
-      create_computer_player
-      play_game
+      menu_codemaker
     when 3
-      puts "\e[H\e[2J"
-      @player = Human.new
-      play_game
+      menu_codebreaker
     when 4
-      puts display_score_table
-      input = gets.chomp
-      main_menu
+      menu_scores
     when 5
-      reset_score
-      puts display_score_reset
-      input = gets.chomp
-      main_menu
+      menu_reset_scores
     when 6
-      continue = false
+      menu_quit
     end
+  end
+
+  def menu_rules
+    puts display_rules
+    game_rules_submenu
+  end
+
+  def menu_codemaker
+    create_computer_player
+    play_game
+  end
+
+  def menu_codebreaker
+    puts "\e[H\e[2J"
+    @player = Human.new
+    play_game
+  end
+
+  def menu_scores
+    puts display_score_table
+    input = gets.chomp
+    main_menu
+  end
+
+  def menu_reset_scores
+    reset_score
+    puts display_score_reset
+    input = gets.chomp
+    main_menu
+  end
+
+  def menu_quit
+    continue = false
+  end
+
+  def menu_history
+    puts display_history_mastermind
+    input = gets.chomp.to_i
+    main_menu
   end
 
   def game_rules_submenu
@@ -55,18 +89,17 @@ class Game
       puts display_error_invalid_input
       input = gets.chomp.to_i
     end
+    game_rules_submenu_options(input)
+  end
+
+  def game_rules_submenu_options(input)
     case input
     when 1
-      create_computer_player
-      play_game
+      menu_codemaker
     when 2
-      puts "\e[H\e[2J"
-      @player = Human.new
-      play_game
+      menu_codebreaker
     when 3
-      puts display_history_mastermind
-      input = gets.chomp.to_i
-      main_menu
+      menu_history
     when 4
       main_menu
     end
@@ -79,6 +112,10 @@ class Game
       puts display_error_invalid_input
       input = gets.chomp.to_i
     end
+    computer_player_options(input)
+  end
+
+  def computer_player_options(input)
     case input
     when 1
       @player = Stubborn.new(@board)
@@ -124,10 +161,14 @@ class Game
     color_match = matches - exact_match
   end
 
-  def feedback
-    @feedback = []
+  def convert_matches_to_symbols
     @exact_match = exact_match.map { |item| item = red("\u25CF") }
     @color_match = color_match.map { |item| item = gray("\u25CF") }
+  end
+
+  def feedback
+    @feedback = []
+    convert_matches_to_symbols
     @placeholder = [gray("\u25CB"), gray("\u25CB"), gray("\u25CB"), gray("\u25CB")]
     @feedback = @feedback.push(@exact_match, @color_match, @placeholder).flatten.take(4)
     @board.small_holes_set << @feedback
@@ -151,21 +192,29 @@ class Game
     @computer_score = 0
     @human_score = 0
   end
-
+  
   def game_over
     if cracked?
-      if player.class.eql?(Human)
-        human_won
-      elsif player.class != Human
-        computer_won
-      end
+      game_over_code_broken
     else
-      if player.class.eql?(Human)
-        puts display_human_lost
-        puts display_secret_code(board)
-      else
-        puts display_computer_lost
-      end
+      game_over_no_attempts
+    end
+  end
+
+  def game_over_code_broken
+    if player.class.eql?(Human)
+      human_won
+    else
+      computer_won
+    end
+  end
+
+  def game_over_no_attempts
+    if player.class.eql?(Human)
+      puts display_human_lost
+      puts display_secret_code(board)
+    else
+      puts display_computer_lost
     end
   end
 

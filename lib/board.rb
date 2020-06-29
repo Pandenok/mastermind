@@ -19,11 +19,25 @@ class Board
   end
 
   def show(player)
+    print show_attempt_number
+    print show_guess(player)
+    puts show_feedback
+  end
+
+  def show_attempt_number
+    bold("\n  #{@playboard.size}. ").ljust(18)
+  end
+
+  def show_guess(player)
     if player.class.eql?(Human)
-      puts bold("\n  #{@playboard.size}. ").ljust(18) + 'You tried: '.ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and get'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
+      'You tried: ' + @playboard.last { |hole| hole }.join(' | ')
     else
-      puts bold("\n  #{@playboard.size}. ").ljust(18) + "#{player.name} tries: ".ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and gets'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
+      "#{player.name} tried: ".ljust(8) + @playboard.last { |hole| hole }.join(' | ')
     end
+  end
+
+  def show_feedback
+    'and got'.rjust(10).ljust(12) + @small_holes_set.last.join('  ')
   end
 
   def create_secret_code(player)
@@ -49,9 +63,7 @@ class Board
   def convert_letters_to_colours
     @secret_code = @player_code.map do |letter|
       @code_pegs.each do |key, color|
-        if key.eql?(letter)
-          letter = color
-        end
+        letter = color if key.eql?(letter)
       end
       letter
     end

@@ -105,7 +105,7 @@ class Methodical
     elsif idea_ready?
       work_with_idea(board)
       put_on(board)
-    elsif check_for_bluee(board)
+    elsif check_for_blue(board)
       @guess = [board.code_pegs['b'], board.code_pegs['b'], board.code_pegs['g'], board.code_pegs['g']]
       analyse_feedback(board)
       put_on(board)
@@ -168,7 +168,7 @@ class Methodical
     board.small_holes_set.last.eql?(nil)
   end
 
-  def check_for_bluee(board)
+  def check_for_blue(board)
     @last_guess.eql?([board.code_pegs['b'], board.code_pegs['b'], board.code_pegs['b'], board.code_pegs['b']])
   end
 
@@ -212,14 +212,12 @@ class Knuth
   end
 
   def make_guess(board)
-    if board.small_holes_set.eql?([])
-      board.playboard << @guess
-    else
+    unless board.small_holes_set.eql?([])
       algorithm(board)
       index = rand(0...@possibilities.count)
       @guess = @possibilities.delete_at(index)
-      board.playboard << @guess
     end
+    board.playboard << @guess
   end
 
   def algorithm(board)
