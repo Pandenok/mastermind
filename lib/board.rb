@@ -22,7 +22,7 @@ class Board
     if player.class.eql?(Human)
       puts bold("\n  #{@playboard.size}. ").ljust(18) + 'You tried: '.ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and get'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
     else
-      puts bold("\n  #{@playboard.size}. ").ljust(18) + "#{player.to_s} tries: ".ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and gets'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
+      puts bold("\n  #{@playboard.size}. ").ljust(18) + "#{player.name} tries: ".ljust(8) + @playboard.last { |hole| hole }.join(' | ') + 'and gets'.rjust(10).ljust(12) + "#{@small_holes_set.last.join('  ')}"
     end
   end
 

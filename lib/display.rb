@@ -1,3 +1,5 @@
+require './colorable'
+
 module Display
   include Colorable
 
@@ -145,7 +147,7 @@ module Display
 
   def display_announce_codemaker(player)
     system 'clear'
-    puts "You are playing as a Codemaker against #{player.to_s} player ..."
+    puts "You are playing as a Codemaker against #{player.name} player ..."
   end
 
   def display_code_prompt
@@ -195,11 +197,11 @@ module Display
   end
 
   def display_computer_won(message)
-    {'Stubborn' => "\n#{player.to_s} has successfully cracked your secret code!\nWow! This day arrived! Run to buy a lottery! NOOOOW!",
-    'Scatterbrain' => "\n#{player.to_s} has successfully cracked your secret code!\nA winner never stops trying!",
-    'Methodical' => "\n#{player.to_s} has successfully cracked your secret code!\nNothing is born into this world without labor.",
-    'Knuth' => "\nEasy peasy!\n#{player.to_s} has successfully cracked your secret code!\nIf you think you can win, you can win. Faith is necessary to victory.",
-    'Cheater' => "\n#{player.to_s} has successfully cracked your secret code!\nNo comments... I would prefer even to fail with honor than to win by cheating.",
+    {'Stubborn' => "\n#{player.name} has successfully cracked your secret code!\nWow! This day arrived! Run to buy a lottery! NOOOOW!",
+    'Scatterbrain' => "\n#{player.name} has successfully cracked your secret code!\nA winner never stops trying!",
+    'Methodical' => "\n#{player.name} has successfully cracked your secret code!\nNothing is born into this world without labor.",
+    'Knuth' => "\nEasy peasy!\n#{player.name} has successfully cracked your secret code!\nIf you think you can win, you can win. Faith is necessary to victory.",
+    'Cheater' => "\n#{player.name} has successfully cracked your secret code!\nNo comments... I would prefer even to fail with honor than to win by cheating.",
     } [message]
   end
 
@@ -226,7 +228,7 @@ module Display
   end
 
   def display_computer_lost
-    puts "\n#{green("Congratulations!")}\n#{player.to_s} ran out of all the available attemps.\nThat was a hard code to crack!\nYou earn extra point!"
+    puts "\n#{green("Congratulations!")}\n#{player.name} ran out of all the available attemps.\nThat was a hard code to crack!\nYou earn extra point!"
   end
 
   def display_error_invalid_input

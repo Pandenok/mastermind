@@ -176,7 +176,7 @@ class Game
   end
 
   def computer_won
-    puts display_computer_won(player.class.to_s)
+    puts display_computer_won(player.class.name)
   end
 
   def repeat_game

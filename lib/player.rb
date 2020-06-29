@@ -50,7 +50,7 @@ class Stubborn
     board.playboard << @guess
   end
 
-  def to_s
+  def name
     'The stubborn player'
   end
 end
@@ -67,7 +67,7 @@ class Cheater
     board.playboard << @guess
   end
 
-  def to_s
+  def name
     'The Cheater'
   end
 end
@@ -80,7 +80,7 @@ class Scatterbrain
     board.playboard << @guess
   end
 
-  def to_s
+  def name
     'The Scatterbrain'
   end
 end
@@ -95,7 +95,7 @@ class Methodical
     @last_guess = []
   end
 
-  def to_s
+  def name
     'The Methodical'
   end
 
@@ -207,7 +207,7 @@ class Knuth
     @guess = @possibilities[1122]
   end
 
-  def to_s
+  def name
     'The Knuth'
   end
 
