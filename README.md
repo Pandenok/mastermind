@@ -65,7 +65,7 @@ Avoid last `\n` character in heredoc by using `chomp` along with heredoc like th
 
 ### Monkey Patching
 
-Changing a method at runtime instead of updating the object definition is one example;similarly, adding attributes (whether methods or variables) at runtime is considered monkey patching. These are often done when working with modules you don't have the source for, such that the object definitions can't be easily changed.
+Changing a method at runtime instead of updating the object definition is one example; similarly, adding attributes (whether methods or variables) at runtime is considered monkey patching. These are often done when working with modules you don't have the source for, such that the object definitions can't be easily changed.
 
 This is considered bad because it means that an object's definition does not completely or accurately describe how it actually behaves.
 
@@ -75,7 +75,7 @@ To reduce the ABC value, reduce assignments (use less intermediate variables), f
 
 ## Eventual Improvements List
 
-- [ ] finish Knuth algorithm with minmax sorting from step 6
+- [ ] finish Knuth algorithm with minmax sorting from step 6 (@aaron_contreras)
 
 - [ ] refactor spaghetti code of Methodical Player algorithm
 
@@ -85,11 +85,9 @@ To reduce the ABC value, reduce assignments (use less intermediate variables), f
 
 - [ ] change `@code_pegs` to CONSTANT (@rlmoser)
 
-- [ ] split all the `case` statements in `game.rb` into its own methods (@rlmoser)
+- [X] split all the `case` statements in `game.rb` into its own methods (@rlmoser)
 
-- [ ] create a separate `module Colorable` to keep colourful formatting in order to avoid monkey patching (@rlmoser & @timato)
+- [X] create a separate `module Colorable` to keep colourful formatting in order to avoid monkey patching (@rlmoser & @timato)
 
-- [ ] refactor the code to reduce ABC value
-
-
+- [X] refactor the code to reduce ABC value (@rlmoser & @aaron_contreras)
 
